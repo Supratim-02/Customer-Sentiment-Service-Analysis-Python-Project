@@ -1,211 +1,189 @@
 # Customer Sentiment & Service Experience Analysis
 
-## 📘 Introduction
-In modern customer-centric organizations, understanding **how customers feel** is as important as knowing **what they rate**.  
-This project delivers a **comprehensive, end-to-end analytical framework** to study customer sentiment and service experience using Python.
+## 📘 Project Overview
+This project presents an **end-to-end customer sentiment and service experience analysis** using Python.  
+It aims to understand how **customer emotions, ratings, response time, complaint behavior, and issue resolution** collectively shape customer satisfaction and operational service risk.
 
-The analysis integrates **sentiment, ratings, response time, complaints, and issue resolution** into a unified view, enabling organizations to:
-- Detect dissatisfaction early
-- Quantify service risk
-- Optimize customer support operations using data-driven insights
-
----
-
-## 🧩 Problem Context
-Customer dissatisfaction often remains hidden behind:
-- Neutral or misleading ratings
-- Unregistered complaints
-- Delayed support responses
-- Unresolved service issues
-
-Traditional dashboards focus on surface metrics (ratings, ticket counts), but fail to capture **emotional sentiment** and **silent dissatisfaction**.  
-This project bridges that gap.
+The analysis integrates structured data processing, feature engineering, statistical summarization, and advanced visual analytics to deliver **actionable, business-driven insights** for improving customer support performance.
 
 ---
 
 ## 🎯 Project Objectives
-The core objectives of this project are to:
+The primary objectives of this project are to:
 
-1. Analyze the **distribution of customer sentiment** (Positive, Neutral, Negative)
-2. Evaluate **alignment and misalignment** between ratings and sentiment
-3. Measure the **impact of response time** on sentiment
-4. Identify **critical response-time thresholds** that increase dissatisfaction
-5. Assess how **complaint registration** varies across sentiment types
-6. Measure the effect of **issue resolution** on customer perception
-7. Detect **silent dissatisfied customers** who did not register complaints
-8. Compare sentiment patterns across:
-   - Platforms
-   - Product categories
-   - Regions
-   - Age groups
-   - Gender
-9. Develop a **custom service risk score** for operational risk assessment
-10. Build an **integrated visual dashboard** for executive-level insights
-11. Derive **actionable business recommendations**
+1. Analyze the overall distribution of customer sentiment (Positive, Neutral, Negative)
+2. Examine alignment and misalignment between customer ratings and expressed sentiment
+3. Evaluate the impact of response time on customer satisfaction
+4. Identify response-time thresholds that escalate negative sentiment
+5. Study how complaint registration varies across sentiment categories
+6. Assess the effect of issue resolution on customer perception
+7. Identify **silent dissatisfied customers** who do not register complaints
+8. Compare sentiment across platforms, product categories, regions, age groups, and gender
+9. Develop a **custom service risk score** to quantify operational risk
+10. Build a visual dashboard integrating sentiment and service metrics
+11. Derive data-driven recommendations for customer support optimization
 
 ---
 
-## ❓ Key Business Questions Answered
-- What proportion of customers are genuinely satisfied or dissatisfied?
-- Do high ratings always imply positive sentiment?
-- How does delayed support affect customer emotion?
-- At what response-time point does sentiment sharply deteriorate?
-- Are unresolved issues strongly linked to negative sentiment?
-- How many unhappy customers remain silent?
-- Which platforms and products pose the highest service risk?
-- How do demographics influence service sensitivity?
-- Can customer service risk be quantified numerically?
+## 🗂️ Dataset Description
+The dataset represents **customer feedback and service interaction records** collected across multiple platforms and product categories.
+
+- Each row corresponds to **one customer interaction or review**
+- The dataset combines **demographic, behavioral, service, and feedback attributes**
+- Both qualitative (sentiment, review text) and quantitative (ratings, response time) variables are included
 
 ---
 
-## 🧠 Methodology & Analytical Workflow
+## 📊 Table Structure (Data Dictionary)
 
-### 1️⃣ Data Ingestion
-- Dataset loaded using **Pandas**
-- Shape, schema, and data types examined
-- Initial quality checks performed
-
----
-
-### 2️⃣ Data Cleaning & Standardization
-- Missing categorical values replaced with `"unknown"`
-- Text fields standardized (lowercase, trimmed)
-- Binary columns normalized (`yes/no`)
-- Duplicate records removed to ensure data integrity
-
-This step ensures **consistency, accuracy, and analytical reliability**.
-
----
-
-### 3️⃣ Feature Engineering
-New analytical features created:
-
-- **Review Length**  
-  Measures depth of customer feedback
-
-- **Response Time Buckets**  
-  Categorized response times into:
-  - `<1h`
-  - `1–3h`
-  - `3–6h`
-  - `6–12h`
-  - `12–24h`
-  - `>24h`
-
-These features enable threshold-based behavioral analysis.
+| Column Name | Data Type | Description | Analytical Relevance |
+|------------|----------|-------------|----------------------|
+| `customer_id` | Integer / String | Unique identifier for each customer | Record tracking and deduplication |
+| `age_group` | Categorical | Age range of the customer | Demographic sentiment comparison |
+| `gender` | Categorical | Gender of the customer | Gender-based perception analysis |
+| `region` | Categorical | Geographic region of the customer | Regional service performance |
+| `platform` | Categorical | Platform used (Web, App, Store, etc.) | Platform-wise sentiment & response |
+| `product_category` | Categorical | Category of purchased product | Product-level service evaluation |
+| `purchase_channel` | Categorical | Mode of purchase | Channel-based service assessment |
+| `review_text` | Text | Written customer feedback | Basis for sentiment classification |
+| `sentiment` | Categorical | Sentiment label (positive / neutral / negative) | Core emotional indicator |
+| `customer_rating` | Numeric (1–5) | Customer satisfaction rating | Quantitative satisfaction measure |
+| `response_time_hours` | Numeric | Support response time in hours | Key service performance metric |
+| `complaint_registered` | Binary (Yes/No) | Complaint filing indicator | Complaint behavior analysis |
+| `issue_resolved` | Binary (Yes/No) | Issue resolution status | Resolution impact measurement |
 
 ---
 
-### 4️⃣ Sentiment Distribution Analysis
-- Absolute sentiment counts
-- Percentage contribution of each sentiment category
-- Identifies overall emotional tone of customers
+## 🧹 Data Cleaning & Standardization
+To ensure analytical reliability:
+
+- Missing categorical values were replaced with `"unknown"`
+- Text fields were standardized (lowercase, trimmed)
+- Binary columns normalized to consistent `yes / no` values
+- Duplicate records removed to prevent bias
+
+This step ensures **consistency, accuracy, and reproducibility**.
 
 ---
 
-### 5️⃣ Rating vs Sentiment Analysis
-- Computed average rating per sentiment
-- Identified **rating–sentiment misalignment**, including:
+## 🧠 Feature Engineering
+
+### 🔹 Review Length
+- Calculated as the character length of `review_text`
+- Used to assess emotional intensity in customer feedback
+
+### 🔹 Response Time Buckets
+Response time was categorized into operational thresholds:
+
+| Bucket | Interpretation |
+|------|---------------|
+| `<1h` | Immediate response |
+| `1–3h` | Fast response |
+| `3–6h` | Acceptable delay |
+| `6–12h` | High delay |
+| `12–24h` | Critical delay |
+| `>24h` | Severe service failure |
+
+These buckets enable **threshold-based sentiment analysis**.
+
+---
+
+## ❓ Business & Analytical Questions
+- What is the emotional distribution of customers?
+- Do customer ratings always reflect sentiment?
+- How does delayed support affect customer perception?
+- Which response-time thresholds increase dissatisfaction?
+- Are unresolved issues strong drivers of negative sentiment?
+- How many dissatisfied customers remain silent?
+- Which platforms and product categories show higher service risk?
+- How does sentiment vary across demographics and regions?
+- Can service risk be quantified numerically?
+
+---
+
+## 📈 Analytical Components
+
+### 🔹 Sentiment Distribution
+- Absolute and percentage breakdown of sentiment categories
+- Indicates overall customer emotional health
+
+### 🔹 Rating–Sentiment Alignment
+- Average rating by sentiment
+- Identification of misaligned cases:
   - High rating with negative sentiment
   - Low rating with positive sentiment
 
-This reveals **hidden dissatisfaction and emotional bias**.
-
----
-
-### 6️⃣ Response Time Impact Analysis
+### 🔹 Response Time Impact
 - Average response time by sentiment
-- Threshold-based sentiment distribution across response buckets
-- Identifies **critical delays that escalate negative sentiment**
+- Cross-analysis using response-time buckets
 
----
+### 🔹 Complaint Analysis
+- Complaint registration across sentiment categories
+- Identifies underreported dissatisfaction
 
-### 7️⃣ Complaint Behavior Analysis
-- Complaint registration by sentiment
-- Comparison between complaining vs non-complaining customers
-- Helps detect **underreported dissatisfaction**
-
----
-
-### 8️⃣ Issue Resolution Impact
+### 🔹 Issue Resolution Impact
 - Sentiment comparison for resolved vs unresolved cases
-- Strongly highlights the importance of **closure and resolution**
+- Highlights the importance of closure in service delivery
+
+### 🔹 Demographic & Regional Analysis
+- Sentiment variation by age group and gender
+- Regional response time and rating comparison
 
 ---
 
-### 9️⃣ Comparative Performance Analysis
-Sentiment analyzed across:
-- Platforms
-- Product categories
-- Platform × Product combinations
-- Regions (avg response time & rating)
-- Age groups
-- Gender
+## 🚨 Silent Dissatisfaction
+Customers with:
+- `sentiment = negative`
+- `complaint_registered = no`
 
-This enables **targeted operational improvements**.
+were classified as **silent dissatisfied customers**.
+
+These customers represent **hidden churn risk** and are not visible in complaint-based monitoring systems.
 
 ---
 
-### 🔟 Silent Dissatisfaction Detection
-- Identified customers with **negative sentiment but no complaints**
-- Quantified the percentage of silent dissatisfaction
-- Critical for proactive customer retention strategies
+## ⚠️ Service Risk Score
+A composite **Service Risk Score** was developed:
 
----
 
-### 1️⃣1️⃣ Custom Service Risk Score
-A composite **Service Risk Score** was developed using:
-
-- Response time (weighted)
-- Unresolved issues
-- Complaint registration
-
-This score:
-- Quantifies operational risk
-- Flags high-risk customers
-- Supports proactive intervention
+### Purpose:
+- Quantify operational service risk
+- Identify high-risk interactions
+- Enable proactive customer support intervention
 
 ---
 
 ## 📊 Visualization & Dashboard
-The project includes:
-- Multi-line trend visualizations
-- Sentiment-based performance plots
-- An integrated **Customer Sentiment & Service Experience Dashboard** showing:
-  - Sentiment distribution
-  - Ratings
-  - Response time
-  - Complaints
-  - Issue resolution
-  - Platform performance
+A consolidated dashboard was created to visualize:
+- Sentiment distribution
+- Average ratings by sentiment
+- Response time patterns
+- Complaint behavior
+- Issue resolution share
+- Platform-wise service performance
 
-The dashboard enables **executive-level decision-making**.
+Designed for **managerial and executive decision-making**.
 
 ---
 
 ## 🔍 Key Insights
-1. Positive sentiment customers receive faster responses and give higher ratings
-2. Negative sentiment strongly correlates with delayed response and unresolved issues
+1. Positive sentiment aligns with faster responses and higher ratings
+2. Delayed response and unresolved issues strongly drive negative sentiment
 3. Rating–sentiment misalignment reveals hidden dissatisfaction
-4. A significant portion of dissatisfied customers remain silent
-5. Certain platforms and product categories show elevated service risk
-6. Issue resolution dramatically improves sentiment
-7. Service risk scores peak for negative sentiment customers
-8. Age groups differ in sensitivity to service delays
-9. Complaint likelihood increases sharply as sentiment worsens
-10. Service experience variables are tightly interconnected
+4. A significant proportion of dissatisfied customers remain silent
+5. Certain platforms and product categories consistently show higher risk
+6. Issue resolution has a major positive impact on sentiment
+7. Service risk score effectively highlights operational bottlenecks
 
 ---
 
-## ✅ Business Recommendations
-- Reduce response time, especially beyond **3–6 hours**
+## ✅ Recommendations
+- Reduce response time beyond the **3–6 hour threshold**
 - Prioritize quick issue resolution
-- Monitor silent dissatisfaction using sentiment signals
-- Use service risk scores for early warnings
-- Improve service quality on high-risk platforms/products
-- Implement sentiment-aware customer support workflows
-- Regularly monitor dashboards for bottleneck detection
-- Audit rating–sentiment gaps to uncover service blind spots
+- Monitor silent dissatisfaction using sentiment data
+- Use service risk scores to flag high-risk cases
+- Improve service quality on high-risk platforms and products
+- Regularly monitor dashboards for early warning signals
 
 ---
 
@@ -218,13 +196,13 @@ The dashboard enables **executive-level decision-making**.
 
 ---
 
-## 📁 Project Structure (Suggested)
+## 📁 Suggested Project Structure
 
 ---
 
 ## 👤 Author
-**Supratim Maity**  
+**Supratim Maity**    
 
 ---
 
-⭐ *If you find this project valuable, consider starring the repository.*
+⭐ If you find this project useful, consider starring the repository.
